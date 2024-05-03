@@ -50,7 +50,7 @@ def precipitation():
     session = Session(engine)
     most_recent = session.query(measurement.date).order_by(measurement.date.desc()).first()
 # Starting from the most recent data point in the database. 
-    most_recent = dt.datetime(2017, 8, 23)
+    most_recent = dt(2017, 8, 23)
 # Calculate the date one year from the last date in data set.
     desired_date = most_recent - dt.timedelta(days=365)
 
@@ -80,7 +80,7 @@ def stations():
 def tobs():
     session = Session(engine)
     #Making a date 1 year from last entry in dataset
-    last_twelve = dt.datetime(2016, 8, 23)
+    last_twelve = dt(2016, 8, 23)
     #Grabbing the temp data and date for a specific station but only the last year
     temp_query = session.query(measurement.tobs, measurement.date).filter(measurement.station == "USC00519281").filter(measurement.date > last_twelve)
     temp_list = []
@@ -90,7 +90,7 @@ def tobs():
     session.close()
     return jsonify(temp_list)
 
-@app.route("/api.v1.0/<start>")
+@app.route("/api/v1.0/<start>")
 def starter(start):
     session = Session(engine)
     #Converting input string to datetime format
